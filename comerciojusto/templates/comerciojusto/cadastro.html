@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 50px; }
+    form { display: inline-block; text-align: left; }
+    label { display: block; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Cadastro</h2>
+  {% if erro %}<p style="color:red">{{ erro }}</p>{% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <label>Nome:</label>
+    <input type="text" name="nome" required>
+    <label>Email:</label>
+    <input type="email" name="email" required>
+    <label>Senha:</label>
+    <input type="password" name="senha" required>
+    <label>Tipo:</label>
+    <select name="tipo" required>
+      <option value="produtor">Produtor</option>
+      <option value="empresa">Empresa</option>
+      <option value="gestor">Gestor</option>
+      <option value="operador">Operador</option>
+    </select>
+    <button type="submit">Cadastrar</button>
+  </form>
+</body>
+</html>
