@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Área do Operador - Fair Trade Connect</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #7a9d3d;
+      --secondary: #5a7a2f;
+    }
+    
+    body {
+      background: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .sidebar {
+      background: linear-gradient(135deg, #7a9d3d 0%, #5a7a2f 100%);
+      min-height: 100vh;
+      color: white;
+      padding: 20px;
+    }
+    
+    .sidebar h4 {
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+    
+    .sidebar .nav-link {
+      color: rgba(255, 255, 255, 0.8);
+      padding: 12px 15px;
+      margin: 8px 0;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .sidebar .nav-link:hover,
+    .sidebar .nav-link.active {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+    
+    .sidebar .nav-link i {
+      margin-right: 10px;
+    }
+    
+    .main-content {
+      padding: 30px;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header h2 {
+      color: #7a9d3d;
+      margin: 0;
+      font-weight: 700;
+    }
+    
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      transition: transform 0.3s;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .card-header {
+      background: linear-gradient(135deg, #7a9d3d 0%, #5a7a2f 100%);
+      color: white;
+      border-radius: 12px 12px 0 0 !important;
+    }
+    
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    
+    .stat-card i {
+      font-size: 32px;
+      color: #7a9d3d;
+      margin-bottom: 10px;
+    }
+    
+    .stat-card h4 {
+      color: #7a9d3d;
+      font-weight: 700;
+      margin: 10px 0;
+    }
+    
+    .stat-card p {
+      color: #666;
+      margin: 0;
+      font-size: 14px;
+    }
+    
+    .table {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    
+    .table thead {
+      background: linear-gradient(135deg, #7a9d3d 0%, #5a7a2f 100%);
+      color: white;
+    }
+    
+    .badge {
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 sidebar">
+        <a href="{% url 'index' %}" style="text-decoration: none; color: white;">
+          <h4 style="cursor: pointer; margin-bottom: 30px;">🏠 Fair Trade</h4>
+        </a>
+        <nav class="nav flex-column">
+          <a class="nav-link active" href="#dashboard">
+            <i class="fas fa-chart-line"></i> Dashboard
+          </a>
+          <a class="nav-link" href="#pedidos">
+            <i class="fas fa-boxes"></i> Pedidos
+          </a>
+          <a class="nav-link" href="#logistica">
+            <i class="fas fa-truck"></i> Logística
+          </a>
+          <a class="nav-link" href="#estoque">
+            <i class="fas fa-warehouse"></i> Estoque
+          </a>
+          <a class="nav-link" href="#relatorios">
+            <i class="fas fa-chart-bar"></i> Relatórios
+          </a>
+          <a class="nav-link" href="#configuracoes">
+            <i class="fas fa-cog"></i> Configurações
+          </a>
+          <a class="nav-link" href="{% url 'logout' %}">
+            <i class="fas fa-sign-out-alt"></i> Sair
+          </a>
+        </nav>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-md-9 main-content">
+        <div class="header">
+          <div>
+            <h2>Painel Operacional</h2>
+            <p style="color: #666; margin: 5px 0;">Bem-vindo, {{ user.first_name }}!</p>
+          </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="row" id="dashboard">
+          <div class="col-md-3">
+            <div class="stat-card">
+              <i class="fas fa-box"></i>
+              <h4>0</h4>
+              <p>Pedidos</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <i class="fas fa-truck"></i>
+              <h4>0</h4>
+              <p>Em Trânsito</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <i class="fas fa-warehouse"></i>
+              <h4>0</h4>
+              <p>Em Estoque</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <i class="fas fa-check-circle"></i>
+              <h4>0</h4>
+              <p>Entregues</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Orders Management -->
+        <div class="card" id="pedidos">
+          <div class="card-header">
+            <h5>Gerenciar Pedidos</h5>
+          </div>
+          <div class="card-body">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Empresa</th>
+                  <th>Produtor</th>
+                  <th>Status</th>
+                  <th>Data</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="6" style="text-align: center; color: #666;">Nenhum pedido encontrado</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Logistics -->
+        <div class="card" id="logistica">
+          <div class="card-header">
+            <h5>Logística</h5>
+          </div>
+          <div class="card-body">
+            <p style="color: #666;">Nenhuma movimentação de logística no momento.</p>
+          </div>
+        </div>
+
+        <!-- Inventory -->
+        <div class="card" id="estoque">
+          <div class="card-header">
+            <h5>Estoque</h5>
+          </div>
+          <div class="card-body">
+            <p style="color: #666;">Nenhum produto em estoque.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

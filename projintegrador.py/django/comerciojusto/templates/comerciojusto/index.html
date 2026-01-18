@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fair Trade Connect - Comércio Justo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #7a9d3d;
+      --secondary: #5a7a2f;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    /* Navbar */
+    nav.navbar {
+      background: linear-gradient(135deg, #7a9d3d 0%, #5a7a2f 100%);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 24px;
+      color: white !important;
+    }
+    
+    .nav-link {
+      color: white !important;
+      margin: 0 10px;
+      transition: opacity 0.3s;
+    }
+    
+    .nav-link:hover {
+      opacity: 0.8;
+    }
+    
+    /* Search Bar */
+    .search-bar {
+      flex: 1;
+      margin: 0 20px;
+    }
+    
+    .search-bar input {
+      border-radius: 20px;
+      padding: 8px 15px;
+      border: none;
+      width: 100%;
+    }
+    
+    .cart-icon {
+      position: relative;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      margin: 0 15px;
+    }
+    
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #ff4444;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #7a9d3d 0%, #5a7a2f 100%);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+    
+    /* Categories Section */
+    .categories-section {
+      padding: 30px 20px;
+      background: #f8f9fa;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    
+    .category-btn {
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 20px;
+      border: 2px solid #ddd;
+      background: white;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+    
+    .category-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    
+    .category-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    
+    /* Products Section */
+    .products-section {
+      padding: 40px 20px;
+    }
+    
+    .products-section h2 {
+      text-align: center;
+      color: #7a9d3d;
+      font-weight: 700;
+      margin-bottom: 40px;
+    }
+    
+    .product-card {
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s;
+      background: white;
+      cursor: pointer;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .product-image {
+      width: 100%;
+      height: 250px;
+      background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+      overflow: hidden;
+    }
+    
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .product-body {
+      padding: 20px;
+    }
+    
+    .product-body h5 {
+      color: #333;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .product-body p {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+    
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .price {
+      color: #7a9d3d;
+      font-weight: 700;
+      font-size: 18px;
+    }
+    
+    .btn-small {
+      padding: 8px 15px;
+      font-size: 12px;
+    }
+    
+    .btn-add-cart {
+      padding: 8px 15px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    
+    .btn-add-cart:hover {
+      background: var(--secondary);
+      transform: scale(1.05);
+    }
+    
+    /* Rascunho de Carrinho */
+    .draft-notification {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      background: white;
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+      display: none;
+    }
+    
+    .draft-notification.show {
+      display: block;
+      animation: slideIn 0.3s ease-in-out;
+    }
+    
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    /* Features Section */
+    .features {
+      padding: 80px 20px;
+      background: #f8f9fa;
+    }
+    
+    .feature-card {
+      text-align: center;
+      padding: 30px;
+      border-radius: 15px;
+      background: white;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+      margin-bottom: 30px;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .feature-card i {
+      font-size: 40px;
+      color: #7a9d3d;
+      margin-bottom: 20px;
+    }
+    
+    .feature-card h3 {
+      color: #333;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    
+    .feature-card p {
+      color: #666;
+      font-size: 14px;
+    }
+    
+    /* Footer */
+    footer {
+      background: #2c3e50;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+    
+    footer p {
+      margin: 0;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'index' %}">
+        🌾 Fair Trade Connect
+      </a>
+      
+      <!-- Search Bar -->
+      <form class="search-bar" method="GET" action="{% url 'index' %}">
+        <input type="text" name="pesquisa" placeholder="Pesquisar produtos..." value="{{ pesquisa }}">
+      </form>
+      
+      <!-- Cart Icon -->
+      <a href="{% url 'visualizar_carrinho' %}" class="cart-icon">
+        <i class="fas fa-shopping-cart"></i>
+        {% if request.session.carrinho_itens %}
+          <span class="cart-badge">{{ request.session.carrinho_itens }}</span>
+        {% endif %}
+      </a>
+      
+      <!-- Menu Toggle -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <!-- Menu Items -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'caixa_entrada' %}">
+                <i class="fas fa-inbox"></i> Caixa de Entrada
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'meu_perfil' %}">
+                <i class="fas fa-user"></i> Meu Perfil
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}">Sair</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'cadastro' %}">Cadastro</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div>
+      <h1>Bem-vindo ao Fair Trade Connect</h1>
+      <p>Conectando produtores locais com empresas comprometidas com o comércio justo</p>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="categories-section">
+    <div class="container">
+      <h5 style="margin-bottom: 15px; color: #333; font-weight: 700;">Filtrar por Categoria:</h5>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+        {% for cat_value, cat_label in categorias %}
+          <form method="GET" action="{% url 'index' %}" style="display: inline;">
+            <button type="submit" name="categoria" value="{{ cat_value }}" 
+              class="category-btn {% if categoria_selecionada == cat_value %}active{% endif %}">
+              {{ cat_label }}
+            </button>
+          </form>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section class="products-section">
+    <div class="container">
+      <h2>Produtos Disponíveis</h2>
+      
+      {% if produtos %}
+        <div class="row">
+          {% for produto in produtos %}
+            <div class="col-md-4 col-sm-6 col-12 mb-4">
+              <div class="product-card" onclick="window.location.href='{% url 'detalhes_produto' produto.id_produto %}'">
+                <div class="product-image">
+                  {% if produto.imagem %}
+                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                  {% else %}
+                    <span>📦</span>
+                  {% endif %}
+                </div>
+                <div class="product-body">
+                  <h5>{{ produto.nome }}</h5>
+                  <p>{{ produto.descricao|truncatewords:15 }}</p>
+                  <div class="product-footer">
+                    <span class="price">R$ {{ produto.preco }}</span>
+                    <form method="POST" action="{% url 'adicionar_carrinho' %}" onclick="event.stopPropagation();" style="display: inline;">
+                      {% csrf_token %}
+                      <input type="hidden" name="produto_id" value="{{ produto.id_produto }}">
+                      <input type="hidden" name="quantidade" value="1">
+                      <button type="submit" class="btn-add-cart">
+                        <i class="fas fa-shopping-cart"></i> Carrinho
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="alert alert-info text-center">
+          <h5>Nenhum produto encontrado para esta categoria.</h5>
+          <p>Tente outra categoria ou faça uma nova pesquisa.</p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="feature-card">
+            <i class="fas fa-leaf"></i>
+            <h3>Comércio Justo</h3>
+            <p>Preços justos e honestos para os produtores, garantindo sustentabilidade</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <i class="fas fa-handshake"></i>
+            <h3>Conexão Direta</h3>
+            <p>Conecte-se diretamente com empresas interessadas em seus produtos</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <i class="fas fa-certificate"></i>
+            <h3>Certificação</h3>
+            <p>Sistema de certificação para garantir a qualidade dos produtos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Fair Trade Connect. Todos os direitos reservados. | Comércio Justo e Sustentável</p>
+  </footer>
+
+  <!-- Notificação de Rascunho -->
+  <div class="draft-notification" id="draftNotification">
+    <h5>📝 Detectamos um rascunho não salvo</h5>
+    <p>Deseja restaurar o carrinho anterior?</p>
+    <button class="btn btn-primary btn-sm" onclick="restaurarRascunho()">Restaurar</button>
+    <button class="btn btn-secondary btn-sm" onclick="fecharNotificacao()">Descartar</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Sistema de Rascunho do Carrinho
+    document.addEventListener('DOMContentLoaded', function() {
+      const carrinhoRascunho = localStorage.getItem('carrinho_rascunho');
+      
+      if (carrinhoRascunho) {
+        document.getElementById('draftNotification').classList.add('show');
+      }
+      
+      // Salvar carrinho a cada mudança
+      const forms = document.querySelectorAll('form[action*="adicionar_carrinho"]');
+      forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+          localStorage.setItem('carrinho_rascunho', JSON.stringify({
+            timestamp: new Date().toISOString(),
+            itens: 'carregado'
+          }));
+        });
+      });
+    });
+    
+    function restaurarRascunho() {
+      location.reload();
+      fecharNotificacao();
+    }
+    
+    function fecharNotificacao() {
+      localStorage.removeItem('carrinho_rascunho');
+      document.getElementById('draftNotification').classList.remove('show');
+    }
+  </script>
+</body>
+</html>

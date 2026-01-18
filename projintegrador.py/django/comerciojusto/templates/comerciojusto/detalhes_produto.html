@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ produto.nome }} - Fair Trade Connect</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #7a9d3d;
+      --secondary: #5a7a2f;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+    }
+    
+    /* Navbar */
+    nav.navbar {
+      background: linear-gradient(135deg, #7a9d3d 0%, #5a7a2f 100%);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 24px;
+      color: white !important;
+    }
+    
+    /* Breadcrumb */
+    .breadcrumb {
+      background-color: white;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    
+    .breadcrumb a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    
+    /* Product Details */
+    .product-details {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      margin: 20px;
+    }
+    
+    .product-image-large {
+      width: 100%;
+      max-height: 500px;
+      background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 100px;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+    
+    .product-image-large img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .product-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    
+    .product-price {
+      font-size: 36px;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    
+    .product-category {
+      display: inline-block;
+      background: #e8f5e9;
+      color: var(--primary);
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    
+    .quantity-selector input {
+      width: 60px;
+      padding: 8px;
+      text-align: center;
+      border: 2px solid var(--primary);
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    
+    .btn-add-cart {
+      background: var(--primary);
+      color: white;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 20px;
+    }
+    
+    .btn-add-cart:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+    }
+    
+    .payment-methods {
+      margin: 30px 0;
+    }
+    
+    .payment-methods h5 {
+      color: #333;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    
+    .payment-option {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .payment-option:hover {
+      border-color: var(--primary);
+      background: #f0f8f0;
+    }
+    
+    .payment-option input[type="radio"] {
+      margin-right: 15px;
+      cursor: pointer;
+    }
+    
+    .payment-option label {
+      cursor: pointer;
+      margin: 0;
+      flex: 1;
+    }
+    
+    /* Producer Info */
+    .producer-info {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      margin: 20px;
+      border-left: 5px solid var(--primary);
+    }
+    
+    .producer-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .producer-logo {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      margin-right: 20px;
+      overflow: hidden;
+    }
+    
+    .producer-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .producer-name {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    
+    .producer-type {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .producer-description {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    
+    /* Contact Section */
+    .contact-info {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    
+    .contact-item {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .contact-item i {
+      color: var(--primary);
+      margin-right: 15px;
+      font-size: 20px;
+    }
+    
+    .back-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+    
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'index' %}">
+        🌾 Fair Trade Connect
+      </a>
+      <a href="{% url 'visualizar_carrinho' %}" style="color: white; font-size: 24px; margin-right: 20px;">
+        <i class="fas fa-shopping-cart"></i>
+      </a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Breadcrumb -->
+    <a href="{% url 'index' %}" class="back-link">← Voltar para Produtos</a>
+
+    <div class="row">
+      <!-- Produto -->
+      <div class="col-lg-6">
+        <div class="product-image-large">
+          {% if produto.imagem %}
+            <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+          {% else %}
+            <span>📦</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Informações do Produto -->
+      <div class="col-lg-6">
+        <div class="product-details">
+          <h1 class="product-title">{{ produto.nome }}</h1>
+          
+          <span class="product-category">
+            {{ produto.get_categoria_display }}
+          </span>
+          
+          <div class="product-price">R$ {{ produto.preco }}</div>
+          
+          <p style="color: #666; line-height: 1.6; margin: 20px 0;">
+            {{ produto.descricao }}
+          </p>
+
+          <!-- Seletor de Quantidade -->
+          <form method="POST" action="{% url 'adicionar_carrinho' %}">
+            {% csrf_token %}
+            <input type="hidden" name="produto_id" value="{{ produto.id_produto }}">
+            
+            <label for="quantidade" style="font-weight: 600;">Quantidade:</label>
+            <div class="quantity-selector">
+              <input type="number" id="quantidade" name="quantidade" value="1" min="1" required>
+              <span style="color: #666;">unidade(s)</span>
+            </div>
+
+            <!-- Métodos de Pagamento -->
+            <div class="payment-methods">
+              <h5>Métodos de Pagamento Disponíveis:</h5>
+              
+              <div class="payment-option">
+                <input type="radio" id="pix" name="pagamento" value="pix" checked>
+                <label for="pix">
+                  <i class="fas fa-qrcode"></i> PIX
+                </label>
+              </div>
+              
+              <div class="payment-option">
+                <input type="radio" id="credito" name="pagamento" value="credito">
+                <label for="credito">
+                  <i class="fas fa-credit-card"></i> Crédito
+                </label>
+              </div>
+              
+              <div class="payment-option">
+                <input type="radio" id="debito" name="pagamento" value="debito">
+                <label for="debito">
+                  <i class="fas fa-credit-card"></i> Débito
+                </label>
+              </div>
+            </div>
+
+            {% if user.is_authenticated %}
+              <button type="submit" class="btn-add-cart">
+                <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+              </button>
+            {% else %}
+              <button type="button" class="btn-add-cart" onclick="alert('Faça login para comprar!');">
+                <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+              </button>
+              <p style="margin-top: 15px; color: #ff6b6b;">
+                <strong>Nota:</strong> Você pode adicionar itens ao carrinho sem fazer login, mas precisará se cadastrar/fazer login para finalizar a compra.
+              </p>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Informações do Produtor -->
+    <div class="producer-info">
+      <div class="producer-header">
+        <div class="producer-logo">
+          {% if produtor_info.perfil.logo %}
+            <img src="{{ produtor_info.perfil.logo.url }}" alt="Logo">
+          {% else %}
+            👨‍🌾
+          {% endif %}
+        </div>
+        <div>
+          <div class="producer-name">{{ produtor_info.nome }}</div>
+          <div class="producer-type">🌱 {{ produtor_info.perfil.get_tipo_display }}</div>
+        </div>
+      </div>
+
+      {% if produtor_info.perfil.descricao %}
+        <div class="producer-description">
+          <strong>Sobre o Produtor:</strong><br>
+          {{ produtor_info.perfil.descricao }}
+        </div>
+      {% endif %}
+
+      {% if produtor_info.perfil.noticia %}
+        <div class="producer-description">
+          <strong>Novidades:</strong><br>
+          {{ produtor_info.perfil.noticia }}
+        </div>
+      {% endif %}
+
+      <div class="contact-info">
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <span>{{ produtor_info.email }}</span>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-phone"></i>
+          <span>{{ produtor_info.telefone }}</span>
+        </div>
+        {% if produtor_info.perfil.contato_adicional %}
+          <div class="contact-item">
+            <i class="fas fa-info-circle"></i>
+            <span>{{ produtor_info.perfil.contato_adicional }}</span>
+          </div>
+        {% endif %}
+      </div>
+
+      {% if user.is_authenticated %}
+        <button class="btn btn-primary" style="margin-top: 20px; width: 100%;">
+          <i class="fas fa-envelope"></i> Enviar Mensagem ao Produtor
+        </button>
+      {% endif %}
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

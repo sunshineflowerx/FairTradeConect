@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Carrinho - Fair Trade Connect</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #7a9d3d;
+      --secondary: #5a7a2f;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+    }
+    
+    nav.navbar {
+      background: linear-gradient(135deg, #7a9d3d 0%, #5a7a2f 100%);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 24px;
+      color: white !important;
+    }
+    
+    .cart-container {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      margin: 40px 0;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .cart-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    
+    .cart-item {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid #eee;
+      transition: background 0.3s;
+    }
+    
+    .cart-item:hover {
+      background: #f8f9fa;
+    }
+    
+    .item-image {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      margin-right: 20px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    
+    .item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .item-info {
+      flex: 1;
+    }
+    
+    .item-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    
+    .item-price {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 16px;
+    }
+    
+    .item-quantity {
+      margin-left: 30px;
+      text-align: center;
+    }
+    
+    .item-subtotal {
+      margin-left: 30px;
+      text-align: right;
+      min-width: 100px;
+    }
+    
+    .subtotal-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .cart-summary {
+      background: #f8f9fa;
+      padding: 25px;
+      border-radius: 12px;
+      margin-top: 30px;
+    }
+    
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      font-size: 16px;
+    }
+    
+    .summary-line.total {
+      border-top: 2px solid #ddd;
+      padding-top: 15px;
+      margin-top: 15px;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .btn-checkout {
+      background: var(--primary);
+      color: white;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      transition: all 0.3s;
+    }
+    
+    .btn-checkout:hover {
+      background: var(--secondary);
+    }
+    
+    .btn-checkout:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    
+    .btn-continue-shopping {
+      background: #ddd;
+      color: #333;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+    }
+    
+    .btn-continue-shopping:hover {
+      background: #ccc;
+      text-decoration: none;
+      color: #333;
+    }
+    
+    .empty-cart {
+      text-align: center;
+      padding: 60px 20px;
+    }
+    
+    .empty-cart i {
+      font-size: 64px;
+      color: #ddd;
+      margin-bottom: 20px;
+    }
+    
+    .empty-cart h3 {
+      color: #666;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'index' %}">
+        🌾 Fair Trade Connect
+      </a>
+    </div>
+  </nav>
+
+  <div class="container">
+    {% if itens %}
+      <div class="cart-container">
+        <h1 class="cart-title">🛒 Meu Carrinho</h1>
+        
+        <!-- Cart Items -->
+        <div style="margin-bottom: 30px;">
+          {% for item in itens %}
+            <div class="cart-item">
+              <div class="item-image">
+                {% if item.produto.imagem %}
+                  <img src="{{ item.produto.imagem.url }}" alt="{{ item.produto.nome }}">
+                {% else %}
+                  📦
+                {% endif %}
+              </div>
+              
+              <div class="item-info">
+                <div class="item-name">{{ item.produto.nome }}</div>
+                <div class="item-price">R$ {{ item.produto.preco }}</div>
+              </div>
+              
+              <div class="item-quantity">
+                <div style="font-weight: 600;">Quantidade</div>
+                <div style="font-size: 20px;">{{ item.quantidade }}</div>
+              </div>
+              
+              <div class="item-subtotal">
+                <div style="font-weight: 600;">Subtotal</div>
+                <div class="subtotal-price">R$ {{ item.subtotal|floatformat:2 }}</div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+          <div class="summary-line">
+            <span>Subtotal:</span>
+            <span>R$ {{ total|floatformat:2 }}</span>
+          </div>
+          <div class="summary-line">
+            <span>Frete:</span>
+            <span>A calcular</span>
+          </div>
+          <div class="summary-line total">
+            <span>Total:</span>
+            <span>R$ {{ total|floatformat:2 }}</span>
+          </div>
+        </div>
+
+        <!-- Checkout Button -->
+        {% if user.is_authenticated %}
+          <form method="POST" style="margin-top: 30px;">
+            {% csrf_token %}
+            <button type="submit" class="btn-checkout">
+              <i class="fas fa-credit-card"></i> Prosseguir para Pagamento
+            </button>
+            <a href="{% url 'index' %}" class="btn-continue-shopping">
+              ← Continuar Comprando
+            </a>
+          </form>
+        {% else %}
+          <div style="background: #fff3cd; padding: 20px; border-radius: 8px; margin-top: 20px;">
+            <h5 style="color: #856404; margin: 0 0 10px 0;">
+              <i class="fas fa-info-circle"></i> Faça login para comprar
+            </h5>
+            <p style="color: #856404; margin: 0 0 15px 0;">
+              Você precisa fazer login ou se cadastrar para finalizar sua compra.
+            </p>
+            <a href="{% url 'login' %}" class="btn btn-warning" style="margin-right: 10px;">Login</a>
+            <a href="{% url 'cadastro' %}" class="btn btn-success">Criar Conta</a>
+          </div>
+          <a href="{% url 'index' %}" class="btn-continue-shopping">
+            ← Continuar Comprando
+          </a>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="cart-container">
+        <div class="empty-cart">
+          <i class="fas fa-shopping-cart"></i>
+          <h3>Seu carrinho está vazio</h3>
+          <p style="color: #999; margin-bottom: 30px;">Adicione produtos para começar suas compras!</p>
+          <a href="{% url 'index' %}" class="btn btn-primary btn-lg">
+            ← Voltar para Produtos
+          </a>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

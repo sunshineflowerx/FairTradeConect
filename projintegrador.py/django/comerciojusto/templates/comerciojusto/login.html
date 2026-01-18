@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Fair Trade Connect</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #7a9d3d 0%, #5a7a2f 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .login-container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      max-width: 450px;
+      width: 100%;
+      padding: 40px;
+    }
+    .login-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .login-header h2 {
+      color: #7a9d3d;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .login-header p {
+      color: #999;
+      font-size: 14px;
+    }
+    .form-control {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px 15px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+    .form-control:focus {
+      border-color: #7a9d3d;
+      box-shadow: 0 0 0 0.2rem rgba(122, 157, 61, 0.25);
+    }
+    .btn-login {
+      width: 100%;
+      background: linear-gradient(135deg, #7a9d3d 0%, #5a7a2f 100%);
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      margin-top: 10px;
+      transition: transform 0.2s;
+    }
+    .btn-login:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, #6b8c38 0%, #4a6a1f 100%);
+      color: white;
+    }
+    .alert {
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .signup-link {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+    .signup-link p {
+      margin: 0;
+      color: #666;
+      font-size: 14px;
+    }
+    .signup-link a {
+      color: #7a9d3d;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .signup-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-header">
+      <a href="{% url 'index' %}" style="text-decoration: none; color: #7a9d3d;">
+        <h2 style="cursor: pointer;">🌾 Fair Trade Connect</h2>
+      </a>
+      <p>Comércio justo e sustentável</p>
+    </div>
+
+    {% if erro %}
+      <div class="alert alert-danger" role="alert">
+        {{ erro }}
+      </div>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" required placeholder="seu@email.com">
+      </div>
+
+      <div class="mb-3">
+        <label for="senha" class="form-label">Senha</label>
+        <input type="password" class="form-control" id="senha" name="senha" required placeholder="••••••••">
+      </div>
+
+      <button type="submit" class="btn btn-login">Entrar</button>
+    </form>
+
+    <div class="signup-link">
+      <p>Não tem cadastro? <a href="{% url 'cadastro' %}">Crie sua conta aqui</a></p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

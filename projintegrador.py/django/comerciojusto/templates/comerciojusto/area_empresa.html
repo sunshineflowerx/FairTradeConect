@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Área da Empresa - Fair Trade Connect</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #7a9d3d;
+      --secondary: #5a7a2f;
+    }
+    
+    body {
+      background: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      background: linear-gradient(135deg, #7a9d3d 0%, #5a7a2f 100%);
+      min-height: 100vh;
+      color: white;
+      padding: 20px;
+    }
+    
+    .sidebar h4 {
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+    
+    .sidebar .nav-link {
+      color: rgba(255, 255, 255, 0.8);
+      padding: 12px 15px;
+      margin: 8px 0;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .sidebar .nav-link:hover,
+    .sidebar .nav-link.active {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+    
+    .sidebar .nav-link i {
+      margin-right: 10px;
+    }
+    
+    /* Main Content */
+    .main-content {
+      padding: 30px;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header h2 {
+      color: #7a9d3d;
+      margin: 0;
+      font-weight: 700;
+    }
+    
+    /* Cards */
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      transition: transform 0.3s;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .card-header {
+      background: linear-gradient(135deg, #7a9d3d 0%, #5a7a2f 100%);
+      color: white;
+      border-radius: 12px 12px 0 0 !important;
+    }
+    
+    .card-header h5 {
+      margin: 0;
+      font-weight: 600;
+    }
+    
+    /* Stats */
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    
+    .stat-card i {
+      font-size: 32px;
+      color: #7a9d3d;
+      margin-bottom: 10px;
+    }
+    
+    .stat-card h4 {
+      color: #7a9d3d;
+      font-weight: 700;
+      margin: 10px 0;
+    }
+    
+    .stat-card p {
+      color: #666;
+      margin: 0;
+      font-size: 14px;
+    }
+    
+    /* Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .product-item {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+    
+    .product-item:hover {
+      transform: translateY(-5px);
+    }
+    
+    .product-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+    
+    .product-info {
+      padding: 15px;
+    }
+    
+    .product-info h6 {
+      margin-bottom: 10px;
+      color: #333;
+      font-weight: 600;
+    }
+    
+    .product-info p {
+      color: #666;
+      font-size: 13px;
+      margin: 5px 0;
+    }
+    
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .price {
+      color: #7a9d3d;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    
+    /* Buttons */
+    .btn-primary {
+      background: #7a9d3d;
+      border: none;
+      border-radius: 8px;
+    }
+    
+    .btn-primary:hover {
+      background: #5a7a2f;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 sidebar">
+        <a href="{% url 'index' %}" style="text-decoration: none; color: white;">
+          <h4 style="cursor: pointer; margin-bottom: 30px;">🏠 Fair Trade</h4>
+        </a>
+        <nav class="nav flex-column">
+          <a class="nav-link active" href="#dashboard">
+            <i class="fas fa-chart-line"></i> Dashboard
+          </a>
+          <a class="nav-link" href="#produtos">
+            <i class="fas fa-shopping-cart"></i> Encontrar Produtos
+          </a>
+          <a class="nav-link" href="#pedidos">
+            <i class="fas fa-list"></i> Meus Pedidos
+          </a>
+          <a class="nav-link" href="#fornecedores">
+            <i class="fas fa-users"></i> Fornecedores
+          </a>
+          <a class="nav-link" href="#pedidos-pendentes">
+            <i class="fas fa-inbox"></i> Solicitações
+          </a>
+          <a class="nav-link" href="#perfil">
+            <i class="fas fa-user"></i> Meu Perfil
+          </a>
+          <a class="nav-link" href="{% url 'logout' %}">
+            <i class="fas fa-sign-out-alt"></i> Sair
+          </a>
+        </nav>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-md-9 main-content">
+        <div class="header">
+          <div>
+            <h2>Bem-vindo, {{ user.first_name }}!</h2>
+            <p style="color: #666; margin: 5px 0;">Área da Empresa</p>
+          </div>
+          <div>
+            <span style="font-size: 18px;">{{ user.email }}</span>
+          </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="row" id="dashboard">
+          <div class="col-md-3">
+            <div class="stat-card">
+              <i class="fas fa-shopping-bag"></i>
+              <h4>0</h4>
+              <p>Pedidos</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <i class="fas fa-handshake"></i>
+              <h4>0</h4>
+              <p>Fornecedores</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <i class="fas fa-truck"></i>
+              <h4>0</h4>
+              <p>Em Trânsito</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <i class="fas fa-check-circle"></i>
+              <h4>0</h4>
+              <p>Entregues</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Browse Products Section -->
+        <div class="card" id="produtos">
+          <div class="card-header">
+            <h5>Produtos Disponíveis</h5>
+          </div>
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Buscar produtos...">
+              </div>
+              <div class="col-md-6">
+                <select class="form-select">
+                  <option>Todas as categorias</option>
+                  <option>Frutas</option>
+                  <option>Vegetais</option>
+                  <option>Bebidas</option>
+                  <option>Grãos</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="product-grid">
+              <div class="product-item">
+                <div class="product-image">🥕</div>
+                <div class="product-info">
+                  <h6>Cenoura Orgânica</h6>
+                  <p>Produtor: João Silva</p>
+                  <p>Quantidade: 50 kg</p>
+                </div>
+                <div class="product-footer">
+                  <span class="price">R$ 12,90</span>
+                  <button class="btn btn-sm btn-primary">Comprar</button>
+                </div>
+              </div>
+
+              <div class="product-item">
+                <div class="product-image">☕</div>
+                <div class="product-info">
+                  <h6>Café Premium</h6>
+                  <p>Produtor: Maria Santos</p>
+                  <p>Quantidade: 20 kg</p>
+                </div>
+                <div class="product-footer">
+                  <span class="price">R$ 45,00</span>
+                  <button class="btn btn-sm btn-primary">Comprar</button>
+                </div>
+              </div>
+
+              <div class="product-item">
+                <div class="product-image">🍯</div>
+                <div class="product-info">
+                  <h6>Mel Puro</h6>
+                  <p>Produtor: Carlos Oliveira</p>
+                  <p>Quantidade: 30 kg</p>
+                </div>
+                <div class="product-footer">
+                  <span class="price">R$ 35,00</span>
+                  <button class="btn btn-sm btn-primary">Comprar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Orders Section -->
+        <div class="card" id="pedidos">
+          <div class="card-header">
+            <h5>Meus Pedidos</h5>
+          </div>
+          <div class="card-body">
+            <p style="color: #666;">Nenhum pedido realizado ainda.</p>
+          </div>
+        </div>
+
+        <!-- Suppliers Section -->
+        <div class="card" id="fornecedores">
+          <div class="card-header">
+            <h5>Meus Fornecedores</h5>
+          </div>
+          <div class="card-body">
+            <p style="color: #666;">Nenhum fornecedor favorito adicionado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
